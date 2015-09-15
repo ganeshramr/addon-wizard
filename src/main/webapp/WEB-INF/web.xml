@@ -1,0 +1,43 @@
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Servlet declaration can be omitted in which case it would be automatically 
+		added by Jersey -->
+	<servlet>
+		<servlet-name>com.msci.benchmark.aggregator.framework.BenchmarkApplication
+		</servlet-name>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>com.msci.benchmark.aggregator.framework.BenchmarkApplication
+		</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>Jersey2Config</servlet-name>
+		<servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig
+		</servlet-class>
+		<init-param>
+			<param-name>api.version</param-name>
+			<param-value>1.0.0</param-value>
+		</init-param>
+		<init-param>
+			<param-name>swagger.api.basepath</param-name>
+			<param-value>http://localhost:8080/benchmark-aggregator/rest
+			</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<filter>
+		<filter-name>CorsFilter</filter-name>
+		<filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CorsFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+</web-app>
