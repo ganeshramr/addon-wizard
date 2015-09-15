@@ -1,50 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" total="1" passed="0">
+<testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="233" started-at="2015-09-15T19:35:09Z" finished-at="2015-09-15T19:35:09Z">
+  <suite name="Default suite" duration-ms="1350" started-at="2015-09-15T23:19:09Z" finished-at="2015-09-15T23:19:10Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="233" started-at="2015-09-15T19:35:09Z" finished-at="2015-09-15T19:35:09Z">
-      <class name="com.msci.benchmark.aggragator.service.test.SimpleInjectorTest">
-        <test-method status="FAIL" signature="assertPrimaryServiceInjecton()[pri:0, instance:com.msci.benchmark.aggragator.service.test.SimpleInjectorTest@511baa65]" name="assertPrimaryServiceInjecton" duration-ms="206" started-at="2015-09-15T15:35:09Z" finished-at="2015-09-15T15:35:09Z">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[ServiceLocatorUtilities.enableTopicDistribution method has been removed, use ExtrasUtilities.enableTopicDistribution]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: ServiceLocatorUtilities.enableTopicDistribution method has been removed, use ExtrasUtilities.enableTopicDistribution
-	at org.glassfish.hk2.utilities.ServiceLocatorUtilities.enableTopicDistribution(ServiceLocatorUtilities.java:895)
-	at org.jvnet.testing.hk2testng.HK2TestListenerAdapter.initializeServiceLocator(HK2TestListenerAdapter.java:119)
-	at org.jvnet.testing.hk2testng.HK2TestListenerAdapter.injectTestInstance(HK2TestListenerAdapter.java:145)
-	at org.jvnet.testing.hk2testng.HK2TestListenerAdapter.run(HK2TestListenerAdapter.java:84)
-	at org.testng.internal.MethodInvocationHelper.invokeHookable(MethodInvocationHelper.java:208)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:635)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:821)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1131)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:124)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:108)
-	at org.testng.TestRunner.privateRun(TestRunner.java:773)
-	at org.testng.TestRunner.run(TestRunner.java:623)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:357)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:352)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:310)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:259)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1185)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1110)
-	at org.testng.TestNG.run(TestNG.java:1018)
-	at org.testng.remote.RemoteTestNG.run(RemoteTestNG.java:111)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:204)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:175)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+    <test name="Default test" duration-ms="1350" started-at="2015-09-15T23:19:09Z" finished-at="2015-09-15T23:19:10Z">
+      <class name="com.msci.benchmark.aggragator.service.test.TestBenchmarkClientMngmtService">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.msci.benchmark.aggragator.service.test.TestBenchmarkClientMngmtService@6ddf90b0]" name="setUp" is-config="true" duration-ms="663" started-at="2015-09-15T19:19:09Z" finished-at="2015-09-15T19:19:10Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- assertPrimaryServiceInjecton -->
-      </class> <!-- com.msci.benchmark.aggragator.service.test.SimpleInjectorTest -->
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="createClient()[pri:0, instance:com.msci.benchmark.aggragator.service.test.TestBenchmarkClientMngmtService@6ddf90b0]" name="createClient" duration-ms="663" started-at="2015-09-15T19:19:10Z" finished-at="2015-09-15T19:19:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- createClient -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.msci.benchmark.aggragator.service.test.TestBenchmarkClientMngmtService@6ddf90b0]" name="tearDown" is-config="true" duration-ms="11" started-at="2015-09-15T19:19:10Z" finished-at="2015-09-15T19:19:10Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.msci.benchmark.aggragator.service.test.TestBenchmarkClientMngmtService -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
