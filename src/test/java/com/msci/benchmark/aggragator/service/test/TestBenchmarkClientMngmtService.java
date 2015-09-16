@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.Application;
 
+import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTestNg;
 import org.testng.Assert;
@@ -14,6 +15,7 @@ import org.testng.annotations.Test;
 import com.msci.benchmark.aggregator.dto.BenchmarkClientDTO;
 import com.msci.benchmark.aggregator.dto.DeliveryChannelDTO;
 import com.msci.benchmark.aggregator.framework.ApplicationBinder;
+import com.msci.benchmark.aggregator.framework.JerseyHk2AnnotationScanner;
 import com.msci.benchmark.aggregator.rest.BechmarkClientDetailResource;
 import com.msci.benchmark.aggregator.rest.BechmarkClientResource;
 
@@ -68,7 +70,8 @@ public class TestBenchmarkClientMngmtService extends JerseyTestNg.ContainerPerCl
 	@Override
 	protected Application configure() {
 		return new ResourceConfig() {
-			{
+			{   
+				new JerseyHk2AnnotationScanner().scan();
 				register(new ApplicationBinder());
 				register(BechmarkClientResource.class);
 				register(BechmarkClientDetailResource.class);

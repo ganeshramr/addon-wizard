@@ -5,6 +5,7 @@
     <classes>
       <class name="com.msci.benchmark.aggragator.service.test.TestBenchmarkClientMngmtService">
         <methods>
+          <include name="tearDown"/>
           <include name="createClient"/>
           <include name="setUp"/>
         </methods>
