@@ -7,7 +7,7 @@ buildscript {
   }
 
   dependencies {
-	  //For Rapid Development - http://akhikhl.github.io/gretty-doc/Getting-started.html
+	  //gradle appRun:For Rapid Development - http://akhikhl.github.io/gretty-doc/Getting-started.html
     classpath 'org.akhikhl.gretty:gretty:+'
   }
 }
