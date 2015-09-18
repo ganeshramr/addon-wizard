@@ -4,13 +4,13 @@
 	<!-- Servlet declaration can be omitted in which case it would be automatically 
 		added by Jersey -->
 	<servlet>
-		<servlet-name>com.msci.benchmark.aggregator.framework.BenchmarkApplication
+		<servlet-name>com.acme.reference.impl.framework.BenchmarkApplication
 		</servlet-name>
 	</servlet>
 
 
 	<servlet-mapping>
-		<servlet-name>com.msci.benchmark.aggregator.framework.BenchmarkApplication
+		<servlet-name>com.acme.reference.impl.framework.BenchmarkApplication
 		</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>
