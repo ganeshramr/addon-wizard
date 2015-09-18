@@ -1,83 +1,25 @@
 package com.msci.benchmark.aggragator.service.test;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.inject.Inject;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
-
-import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTestNg;
+import org.jvnet.testing.hk2testng.HK2;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.msci.benchmark.aggregator.dto.BenchmarkClientDTO;
-import com.msci.benchmark.aggregator.dto.DeliveryChannelDTO;
-import com.msci.benchmark.aggregator.framework.ApplicationBinder;
-import com.msci.benchmark.aggregator.framework.JerseyHk2AnnotationScanner;
-import com.msci.benchmark.aggregator.rest.BechmarkClientDetailResource;
-import com.msci.benchmark.aggregator.rest.BechmarkClientResource;
+import com.msci.benchmark.aggregator.exception.BechmarkClientServiceException;
+import com.msci.benchmark.aggregator.service.BechmarkClientMngmtService;
 
+@HK2 (binders = {ApplicationBinderForTests.class})
 @Test
-
-public class TestBenchmarkClientMngmtService extends JerseyTestNg.ContainerPerClassTest {
+public class TestBenchmarkClientMngmtService  {
 
 	
+	@Inject
+	BechmarkClientMngmtService benchmarkClientService ;
 
-	@Test
-	public void createClient() {
-
-		BenchmarkClientDTO benchmarkClientDTO = new BenchmarkClientDTO();
-
-		benchmarkClientDTO.setName("acme");
-		benchmarkClientDTO.setDescription("Demo Org");
-
-		List<String> authorizedBenchMarks = new ArrayList<>();
-		authorizedBenchMarks.add("msci");
-		authorizedBenchMarks.add("s&p");
-
-		benchmarkClientDTO.setAuthorizedBenchMarks(authorizedBenchMarks);
-
-		List<DeliveryChannelDTO> deliveryChannels = new ArrayList<>();
-
-		DeliveryChannelDTO ftp = new DeliveryChannelDTO();
-
-		ftp.setName("acme-ftp");
-		ftp.setType("ftp");
-		ftp.setURL("ftp://acme-ftp.com:21");
-		ftp.setUsename("foo");
-		ftp.setPassword("*****");
-
-		deliveryChannels.add(ftp);
-
-		benchmarkClientDTO.setDeliveryChannels(deliveryChannels);
-
-		final String reponse = target("benchmarkclient").request().post(
-				Entity.json(benchmarkClientDTO), String.class);
-		Assert.assertEquals(reponse, "acme");
-		
-		final BenchmarkClientDTO readResp = target("/benchmarkclient/acme").request().get(BenchmarkClientDTO.class);
-		Assert.assertNotNull(readResp);
-		Assert.assertEquals(readResp.getName(),"acme");
-	}
-	
-	
-	
-	/**
-	 * Register the Resource and TestBinder in the Application
-	 */
-	@Override
-	protected Application configure() {
-		return new ResourceConfig() {
-			{   
-				new JerseyHk2AnnotationScanner().scan();
-				register(new ApplicationBinder());
-				register(BechmarkClientResource.class);
-				register(BechmarkClientDetailResource.class);
-
-			}
-		};
-	}
-
+    @Test
+    public void createClient() throws BechmarkClientServiceException {
+    	
+         	Assert.assertEquals(benchmarkClientService.createClient(TestDataGeneratorUtils.generateBenchmarkClientDTO()), "acme");
+    }
 }

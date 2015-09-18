@@ -1,7 +1,6 @@
 package com.msci.benchmark.aggregator.service;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,7 +8,8 @@ import org.jvnet.hk2.annotations.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.msci.benchmark.aggregator.dao.GenericBenchmarkAggregatorDAO;
+import com.msci.benchmark.aggregator.dao.BenchmarkAggregatorDAOI;
+import com.msci.benchmark.aggregator.di.qualifiers.DefaultDAO;
 import com.msci.benchmark.aggregator.dto.BenchmarkClientDTO;
 import com.msci.benchmark.aggregator.exception.BechmarkClientServiceException;
 
@@ -18,9 +18,16 @@ public class BechmarkClientMngmtService {
 	
 	private static final Logger logger = LogManager.getLogger(BechmarkClientMngmtService.class);	
 	
-	@Inject  @Named("BenchmarkClientMngmtInMemoryDAO")
-	private GenericBenchmarkAggregatorDAO<BenchmarkClientDTO> benchmarkClientMgmtDAO;
-
+	
+	private final BenchmarkAggregatorDAOI<BenchmarkClientDTO> benchmarkClientMgmtDAO;
+	
+	@Inject 
+	public BechmarkClientMngmtService(@DefaultDAO final BenchmarkAggregatorDAOI<BenchmarkClientDTO> benchmarkClientMgmtDAO){
+		
+		this.benchmarkClientMgmtDAO = benchmarkClientMgmtDAO; 
+	}
+	
+	
 	public String createClient(BenchmarkClientDTO benchmarkClientDTO) throws BechmarkClientServiceException {
 		
 		logger.debug("BechmarkClientMngmtService:createClient  is invoked");

@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 
 import com.msci.benchmark.aggregator.service.BechmarkClientMngmtService;
 
-@HK2
-public class SimpleInjectorTest {
+@HK2 (binders = {ApplicationBinderForTests.class})
+public class SimpleInjectorTest  {
 
 	
 	@Inject
