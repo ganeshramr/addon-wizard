@@ -20,6 +20,6 @@ public class TestBenchmarkClientMngmtService  {
     @Test
     public void createClient() throws BechmarkClientServiceException {
     	
-         	Assert.assertEquals(benchmarkClientService.createClient(TestDataGeneratorUtils.generateBenchmarkClientDTO()), "acme");
+         	Assert.assertEquals(benchmarkClientService.createClient(TestDataGenerator.generateBenchmarkClientDTO()), "acme");
     }
 }

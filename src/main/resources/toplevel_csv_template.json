@@ -1,0 +1,11 @@
+{
+   "fieldsInOrder":[
+      "OBS_DATE",
+      "BENCH_MDS_UID",
+      "INDEX_MDS_UID",
+      "VENDOR_IDENT",
+      "RETURN_HORIZON",
+      "CURRENCY"
+   ],
+   "delimiter":","
+}

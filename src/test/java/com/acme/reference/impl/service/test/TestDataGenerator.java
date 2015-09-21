@@ -6,7 +6,7 @@ import java.util.List;
 import com.acme.reference.impl.dto.BenchmarkClientDTO;
 import com.acme.reference.impl.dto.DeliveryChannelDTO;
 
-public class TestDataGeneratorUtils {
+public class TestDataGenerator {
 
 	public static BenchmarkClientDTO generateBenchmarkClientDTO(){
 		
