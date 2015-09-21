@@ -10,6 +10,7 @@ A reference implementation project with
 - Hk2 DI
 - Unit and Integration Tests
 - Gradle
+- Bower
 
 clone and run **gradlew appRun**
 
