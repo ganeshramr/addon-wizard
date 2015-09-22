@@ -10,18 +10,18 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.acme.reference.impl.dto.TopLevelDTO;
-import com.acme.reference.impl.util.CSVTemplate;
-import com.acme.reference.impl.util.WriteContentAsCSV;
+import com.acme.reference.impl.util.contentwriter.CSVTemplate;
+import com.acme.reference.impl.util.contentwriter.WriteTopLevelAsCSV;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Test
-public class CSVTemplateTest {
+public class TestCSVTemplate {
 	
 	
 	@Test
-	public void readTemplate() throws JsonParseException, JsonMappingException, IOException {
+	public void hydrateTemplateTest() throws JsonParseException, JsonMappingException, IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		CSVTemplate template = mapper.readValue(this.getClass().getClassLoader().getResource("toplevel_csv_template.json"), CSVTemplate.class);
@@ -30,14 +30,14 @@ public class CSVTemplateTest {
 		tl.setBenchMdsUID("DAS");
 		tl.setIndexMdsUID("SAMPLE");
 		
-		System.out.println(tl.hydrateTemplate(template));
+		System.out.println(template.hydrateTemplateWith(tl));
 		
 	    Assert.assertNotNull(template.toString());
 	}
 	
 	@Test
 	public void write () throws JsonParseException, JsonMappingException, IOException{
-		WriteContentAsCSV writeToCSV = new WriteContentAsCSV();
+		WriteTopLevelAsCSV writeToCSV = new WriteTopLevelAsCSV();
 		List<TopLevelDTO> tllist = new ArrayList<>();
 		
 		TopLevelDTO tl = new TopLevelDTO();
