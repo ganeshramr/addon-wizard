@@ -36,9 +36,12 @@ dependencies {
   compile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:2.21'
   //For Unit tests
   compile 'org.glassfish.hk2:hk2-testng:2.4.0-b31'
+  //For HK2 DI
   compile 'javax.inject:javax.inject:1'
   compile group: 'org.glassfish.hk2', name: 'hk2-utils', version: '2.4.0-b31'
   compile group: 'org.glassfish.hk2', name: 'hk2-api', version: '2.4.0-b31'
+  //For Auto-generating the meta data file (inhabitant) generation - https://hk2.java.net/2.4.0-b20/inhabitant-generator.html#HK2_Metadata_Generator
+  //look for the file after "gradle war" @ <project_home>/benchmark-aggregator/build/classes/main/META-INF/hk2-locator/default
   compile group: 'org.glassfish.hk2', name: 'hk2-metadata-generator', version: '2.4.0-b31'
   
 }
