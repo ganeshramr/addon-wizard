@@ -18,7 +18,7 @@ import com.acme.reference.impl.dto.BenchmarkClientDTO;
 import com.acme.reference.impl.exception.BechmarkClientServiceException;
 import com.acme.reference.impl.service.BechmarkClientMngmtService;
 
-@Api(tags={"Benchmark Client Detail Management Service"}) //swagger resource annotation
+@Api(tags={"Benchmark BenchmarkClient Detail Management Service"}) //swagger resource annotation
 @Path("/benchmarkclient/{clientId}")
 public class BechmarkClientDetailResource {
 	
@@ -32,7 +32,7 @@ private static final Logger logger = LogManager.getLogger(BechmarkClientDetailRe
  
 	@ApiOperation(value = "Read a benchmark client",
 		          notes = "Read a benchmark client")
-    public Response readBenchmarkClient(@PathParam("clientId") String clientId) {
+    public Response readBenchmarkClient(@PathParam("clientId") Long clientId) {
 		
 		 logger.debug("readBenchmarkClient  is invoked for client id {}",clientId);
 		 BenchmarkClientDTO reponse = null;

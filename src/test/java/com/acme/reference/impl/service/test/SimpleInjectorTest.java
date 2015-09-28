@@ -6,17 +6,17 @@ import org.jvnet.testing.hk2testng.HK2;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.acme.reference.impl.service.BechmarkClientMngmtService;
+import com.acme.reference.impl.service.DemoService;
 
 @HK2 (binders = {ApplicationBinderForTests.class})
 public class SimpleInjectorTest  {
 
 	
 	@Inject
-	BechmarkClientMngmtService benchmarkClientService ;
+	DemoService demoService ;
 
     @Test
     public void assertPrimaryServiceInjecton() {
-        Assert.assertNotNull(benchmarkClientService);
+        Assert.assertNotNull(demoService);
     }
 }

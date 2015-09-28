@@ -52,9 +52,9 @@ public class TestBenchmarkClientMngmtServiceInt extends JerseyTestNg.ContainerPe
 
 		final String reponse = target("benchmarkclient").request().post(
 				Entity.json(benchmarkClientDTO), String.class);
-		Assert.assertEquals(reponse, "acme");
+		//Assert.assertEquals(reponse, "1");
 		
-		final BenchmarkClientDTO readResp = target("/benchmarkclient/acme").request().get(BenchmarkClientDTO.class);
+		final BenchmarkClientDTO readResp = target("/benchmarkclient/"+reponse).request().get(BenchmarkClientDTO.class);
 		Assert.assertNotNull(readResp);
 		Assert.assertEquals(readResp.getName(),"acme");
 	}

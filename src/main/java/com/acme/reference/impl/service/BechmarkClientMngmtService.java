@@ -4,25 +4,28 @@ import javax.inject.Inject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.glassfish.hk2.api.PerLookup;
 import org.jvnet.hk2.annotations.Service;
 
 import com.acme.reference.impl.dao.BenchmarkAggregatorDAOI;
-import com.acme.reference.impl.di.qualifiers.DefaultDAO;
+import com.acme.reference.impl.di.qualifiers.InMemoryDAO;
 import com.acme.reference.impl.dto.BenchmarkClientDTO;
 import com.acme.reference.impl.exception.BechmarkClientServiceException;
+import com.acme.reference.impl.model.BenchmarkClient;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
+@PerLookup
 public class BechmarkClientMngmtService {
 	
 	private static final Logger logger = LogManager.getLogger(BechmarkClientMngmtService.class);	
 	
 	
-	private final BenchmarkAggregatorDAOI<BenchmarkClientDTO> benchmarkClientMgmtDAO;
+	private final BenchmarkAggregatorDAOI<BenchmarkClient> benchmarkClientMgmtDAO;
 	
 	@Inject 
-	public BechmarkClientMngmtService(@DefaultDAO final BenchmarkAggregatorDAOI<BenchmarkClientDTO> benchmarkClientMgmtDAO){
+	public BechmarkClientMngmtService(@InMemoryDAO final BenchmarkAggregatorDAOI<BenchmarkClient> benchmarkClientMgmtDAO){
 		
 		this.benchmarkClientMgmtDAO = benchmarkClientMgmtDAO; 
 	}
@@ -36,7 +39,11 @@ public class BechmarkClientMngmtService {
 		try {
 			
 			logger.debug(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(benchmarkClientDTO));
-			return benchmarkClientMgmtDAO.create(benchmarkClientDTO);
+			
+			BenchmarkClient benchmarkClient = new BenchmarkClient();
+			benchmarkClient.setDetails(mapper.writeValueAsString(benchmarkClientDTO));
+			
+			return benchmarkClientMgmtDAO.create(benchmarkClient);
 			
 		} catch (JsonProcessingException e) {
 			
@@ -48,13 +55,15 @@ public class BechmarkClientMngmtService {
 	}
 	
 	
-public BenchmarkClientDTO readClient(String clientId) throws BechmarkClientServiceException {
+public BenchmarkClientDTO readClient(Long clientId) throws BechmarkClientServiceException {
 		
 		logger.debug("BechmarkClientMngmtService:readClient is invoked for id {}",clientId);
 		
 		try {
 			
-			return benchmarkClientMgmtDAO.read(clientId);
+			ObjectMapper mapper = new ObjectMapper();
+			return mapper.readValue(benchmarkClientMgmtDAO.read(clientId).getDetails().getBytes(), BenchmarkClientDTO.class);
+			
 			
 		} catch (Exception e) {
 			

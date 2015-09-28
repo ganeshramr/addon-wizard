@@ -17,7 +17,7 @@ public class DummyBenchmarkClientMngmtDAO implements BenchmarkAggregatorDAOI<Ben
 	}
 
 	@Override
-	public BenchmarkClientDTO read(String id) {
+	public BenchmarkClientDTO read(Long id) {
 		
 		return new BenchmarkClientDTO();
 	}

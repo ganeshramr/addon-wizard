@@ -18,6 +18,10 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+	compile.exclude group: "org.hibernate.javax.persistence", module: "hibernate-jpa-2.0-api"
+  }
+
 dependencies {
 	//Jesery framework
   compile 'org.glassfish.jersey.containers:jersey-container-servlet:2.21'
@@ -43,6 +47,12 @@ dependencies {
   //For Auto-generating the meta data file (inhabitant) generation - https://hk2.java.net/2.4.0-b20/inhabitant-generator.html#HK2_Metadata_Generator
   //look for the file after "gradle war" @ <project_home>/benchmark-aggregator/build/classes/main/META-INF/hk2-locator/default
   compile group: 'org.glassfish.hk2', name: 'hk2-metadata-generator', version: '2.4.0-b31'
+  
+  //JPA
+  compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+  compile 'org.hibernate:hibernate-entitymanager:5.0.1.Final'
+  compile 'org.hsqldb:hsqldb:2.3.3'
+
   
 }
 

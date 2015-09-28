@@ -18,7 +18,7 @@ import com.acme.reference.impl.dto.BenchmarkClientDTO;
 import com.acme.reference.impl.exception.BechmarkClientServiceException;
 import com.acme.reference.impl.service.BechmarkClientMngmtService;
 
-@Api(tags={"Benchmark Clients Management Service"}) //swagger resource annotation
+@Api(tags={"Benchmark BenchmarkClient Management Service"}) //swagger resource annotation
 @Path("/benchmarkclient")
 public class BechmarkClientResource {
 	
