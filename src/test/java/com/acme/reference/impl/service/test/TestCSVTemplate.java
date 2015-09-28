@@ -52,7 +52,7 @@ public class TestCSVTemplate {
 		tllist.add(tl2);
 		
 		
-		Path p1 = Paths.get("/Users/ganesh/projects/msciwrkspace/benchmark-aggregator/CSVFILEFORTOPLEVEL.csv");
+		Path p1 = Paths.get("/Users/ganesh/projects/msciwrkspace/acme-refrence-imp/CSVFILEFORTOPLEVEL.csv");
 		ObjectMapper mapper = new ObjectMapper();
 		CSVTemplate template = mapper.readValue(this.getClass().getClassLoader().getResource("toplevel_csv_template.json"), CSVTemplate.class);
 		

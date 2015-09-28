@@ -18,6 +18,7 @@ public class WriteTopLevelAsCSV implements FileWriterI<TopLevelDTO>{
 	@Override
 	public void write(List<TopLevelDTO> toplevels, Path file, CSVTemplate template) throws JsonParseException, JsonMappingException, IOException{
 		
+		template.writeHeaderTo(file);
 		toplevels.stream().map(tl -> template.hydrateTemplateWith(tl)).forEach(content -> writeToFile(content+System.lineSeparator(),file));
 		
 	}
