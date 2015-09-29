@@ -11,6 +11,7 @@ A reference implementation project with
 - Unit and Integration Tests
 - Gradle
 - Bower
+- JPA + Hibernate
 
 clone and run **gradlew appRun**
 
