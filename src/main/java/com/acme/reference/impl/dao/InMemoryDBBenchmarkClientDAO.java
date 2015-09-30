@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import org.glassfish.hk2.api.PerLookup;
 import org.jvnet.hk2.annotations.Service;
 
-import com.acme.reference.impl.di.qualifiers.DMX;
+import com.acme.reference.impl.di.qualifiers.Benchmark;
 import com.acme.reference.impl.di.qualifiers.InMemory;
 import com.acme.reference.impl.model.BenchmarkClient;
 
@@ -16,7 +16,7 @@ import com.acme.reference.impl.model.BenchmarkClient;
 public class InMemoryDBBenchmarkClientDAO implements BenchmarkAggregatorDAOI<BenchmarkClient> {
 	
 	@Inject
-	@DMX
+	@Benchmark
 	EntityManager em;
 
 	@Override
