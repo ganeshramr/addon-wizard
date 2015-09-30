@@ -9,12 +9,12 @@ import org.glassfish.hk2.api.Factory;
 
 import com.acme.reference.impl.rest.BechmarkClientResource;
 
-public class EMFFactory implements Factory<EntityManagerFactory> {
+public class AppEMFFactory implements Factory<EntityManagerFactory> {
 	
 	private static final Logger logger = LogManager.getLogger(BechmarkClientResource.class);
 	private final EntityManagerFactory emf;
     
-    public EMFFactory (){
+    public AppEMFFactory (){
         emf = Persistence.createEntityManagerFactory("hsqldb-ds");
     }
     

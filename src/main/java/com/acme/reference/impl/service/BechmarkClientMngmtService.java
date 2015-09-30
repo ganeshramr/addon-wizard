@@ -8,7 +8,7 @@ import org.glassfish.hk2.api.PerLookup;
 import org.jvnet.hk2.annotations.Service;
 
 import com.acme.reference.impl.dao.BenchmarkAggregatorDAOI;
-import com.acme.reference.impl.di.qualifiers.InMemoryDAO;
+import com.acme.reference.impl.di.qualifiers.InMemory;
 import com.acme.reference.impl.dto.BenchmarkClientDTO;
 import com.acme.reference.impl.exception.BechmarkClientServiceException;
 import com.acme.reference.impl.model.BenchmarkClient;
@@ -25,7 +25,7 @@ public class BechmarkClientMngmtService {
 	private final BenchmarkAggregatorDAOI<BenchmarkClient> benchmarkClientMgmtDAO;
 	
 	@Inject 
-	public BechmarkClientMngmtService(@InMemoryDAO final BenchmarkAggregatorDAOI<BenchmarkClient> benchmarkClientMgmtDAO){
+	public BechmarkClientMngmtService(@InMemory final BenchmarkAggregatorDAOI<BenchmarkClient> benchmarkClientMgmtDAO){
 		
 		this.benchmarkClientMgmtDAO = benchmarkClientMgmtDAO; 
 	}
