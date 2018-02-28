@@ -13,7 +13,6 @@ import org.glassfish.hk2.api.Factory;
 import org.glassfish.jersey.server.CloseableService;
 
 import com.acme.reference.impl.di.qualifiers.DMX;
-import com.acme.reference.impl.rest.BechmarkClientResource;
 
 
 public class DMXEntityManagerFactory implements Factory<EntityManager> {
@@ -21,7 +20,7 @@ public class DMXEntityManagerFactory implements Factory<EntityManager> {
 	private EntityManager em;
 	private EntityManagerFactory emf;
 	private CloseableService closeableService;
-	private static final Logger logger = LogManager.getLogger(BechmarkClientResource.class);
+	private static final Logger logger = LogManager.getLogger(DMXEntityManagerFactory.class);
 
     @Inject
     public DMXEntityManagerFactory (@DMX EntityManagerFactory emf,CloseableService closeableService){

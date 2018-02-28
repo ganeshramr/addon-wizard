@@ -7,12 +7,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.hk2.api.Factory;
 
-import com.acme.reference.impl.rest.BechmarkClientResource;
-
 
 public class AppEMFFactory implements Factory<EntityManagerFactory> {
 	
-	private static final Logger logger = LogManager.getLogger(BechmarkClientResource.class);
+	private static final Logger logger = LogManager.getLogger(AppEMFFactory.class);
 	private final EntityManagerFactory emf;
     
     public AppEMFFactory (){
