@@ -56,7 +56,7 @@ dependencies {
   
 }
 
-task stage(dependsOn: ['build', 'clean'])
+task stage(dependsOn: ['war', 'clean'])
 build.mustRunAfter clean
 
 

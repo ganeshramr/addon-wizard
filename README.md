@@ -15,4 +15,6 @@ A reference implementation project with
 
 clone and run **gradlew appRun**
 
-launch ***http://localhost:8080/addon-wizard/ui/swagger-ui/index.html***
+launch ***http://blockchain-deploy-wizard.herokuapp.com/ui/swagger-ui/index.html***
+
+heroku war:deploy build/libs/addon-wizard.war --app blockchain-deploy-wizard

@@ -4,12 +4,32 @@
 <link href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+
+
+
+<script src="https://s3.amazonaws.com/assets.heroku.com/boomerang/boomerang.js"></script>
+<script>
+  console.log(document.cookie)
+  document.addEventListener("DOMContentLoaded", function() {
+    Boomerang.init({app: 'foo', addon: 'blockchain'});
+  });
+  
+  
+</script>
 <body ng-app="myApp">
+
+<!-- Top Navbar -->
+
+ 
   <div ng-view >
   </div>
 </body>
 
+
+
 <script src="js/app.js"></script>
+<script src="js/myHomePage.js"></script>
 
 
 </html>

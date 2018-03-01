@@ -13,7 +13,7 @@ import com.acme.reference.impl.dao.em.DMXEMFFactory;
 import com.acme.reference.impl.dao.em.DMXEntityManagerFactory;
 import com.acme.reference.impl.di.qualifiers.Benchmark_;
 import com.acme.reference.impl.di.qualifiers.DMX_;
-import com.acme.reference.impl.service.DemoService;
+import com.acme.reference.impl.service.ProvisionService;
 
 /*
  * Add ONLY what is needed by tests
@@ -23,7 +23,7 @@ public class ApplicationBinderForTests extends AbstractBinder {
     @Override
     protected void configure() {
     	//USE THIS ONLY FOR TESTS
-       bind(DemoService.class).to(DemoService.class);
+       bind(ProvisionService.class).to(ProvisionService.class);
        bindFactory(AppEMFFactory.class).to(EntityManagerFactory.class).qualifiedBy(new Benchmark_()).in(Singleton.class);
        bindFactory(DMXEMFFactory.class).to(EntityManagerFactory.class).qualifiedBy(new DMX_()).in(Singleton.class);
        bindFactory(AppEntityManagerFactory.class).to(EntityManager.class).qualifiedBy(new Benchmark_()).in(RequestScoped.class);

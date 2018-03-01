@@ -6,14 +6,14 @@ import org.jvnet.testing.hk2testng.HK2;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.acme.reference.impl.service.DemoService;
+import com.acme.reference.impl.service.ProvisionService;
 
 @HK2 (binders = {ApplicationBinderForTests.class})
 public class SimpleInjectorTest  {
 
 	
 	@Inject
-	DemoService demoService ;
+	ProvisionService demoService ;
 
     @Test
     public void assertPrimaryServiceInjecton() {
