@@ -4,13 +4,13 @@
 	<!-- Servlet declaration can be omitted in which case it would be automatically 
 		added by Jersey -->
 	<servlet>
-		<servlet-name>com.acme.reference.impl.framework.BenchmarkApplication
+		<servlet-name>com.ofs.heroku.addonwizard.impl.framework.AddOnWizardApplication
 		</servlet-name>
 	</servlet>
 
 
 	<servlet-mapping>
-		<servlet-name>com.acme.reference.impl.framework.BenchmarkApplication
+		<servlet-name>com.ofs.heroku.addonwizard.impl.framework.AddOnWizardApplication
 		</servlet-name>
 		<url-pattern>/rest/*</url-pattern>
 	</servlet-mapping>

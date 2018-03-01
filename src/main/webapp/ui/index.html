@@ -10,9 +10,14 @@
 
 <script src="https://s3.amazonaws.com/assets.heroku.com/boomerang/boomerang.js"></script>
 <script>
+
   console.log(document.cookie)
+  var navData64 = (document.cookie.match('(^|; )heroku-nav-data=([^;]*)')||0)[2]
+  var navData = atob(navData64);
+  var navDataJson = JSON.parse(navData);
+  console.log(navDataJson)
   document.addEventListener("DOMContentLoaded", function() {
-    Boomerang.init({app: 'foo', addon: 'blockchain'});
+    Boomerang.init({app: navDataJson.appname, addon: 'blockchain'});
   });
   
   
