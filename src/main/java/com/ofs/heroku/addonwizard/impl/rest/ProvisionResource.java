@@ -27,109 +27,96 @@ import org.apache.logging.log4j.Logger;
 
 import sun.misc.BASE64Decoder;
 
-import com.ofs.heroku.addonwizard.impl.service.ProvisionService;
+import com.ofs.heroku.addonwizard.impl.dto.request.ProvisionRequest;
+import com.ofs.heroku.addonwizard.impl.service.HerokuIntegrationServices;
 
-@Api(tags={"Add on Provisoning  service"}) //swagger resource annotation
+@Api(tags = { "Add on Provisoning  service" })
+// swagger resource annotation
 @Path("/heroku/resources")
 public class ProvisionResource {
-	
-	private static final Logger logger = LogManager.getLogger(ProvisionResource.class);
-	
-	@Inject
-	ProvisionService demoService ;
 
-	@GET
-    @Produces("application/json")
-	@ApiOperation(value = "Dummy Test method",
-		    notes = "Dummy method to prove deployment - Check")
-    public Response testMethod(@HeaderParam("authorization") String authString,@Context HttpServletRequest request) {
-		 
-		
-		 logger.debug("Resource class is invoked");
-		 String url = "http://localhost:8080/addon-wizard/ui/";
-			
-			URI targetURIForRedirection = URI.create(url);
-		 return Response.seeOther(targetURIForRedirection).cookie(new NewCookie("heroku-nav-data","my-data","/","", "comment", 100, false)).build();
-		 
-		 
-    }
-	
-	
+	private static final Logger logger = LogManager
+			.getLogger(ProvisionResource.class);
+
+	@Inject
+	HerokuIntegrationServices hkIntServices;
 
 	@POST
-    @Produces("application/json")
+	@Produces("application/json")
 	@Consumes("application/json")
-	@ApiOperation(value = "Dummy Test method",
-		    notes = "Dummy method to prove deployment")
-    public Response provision(String data ,@HeaderParam("authorization") String authString) {
-		
-		if(!authCheck(authString)){
-			 return Response.status(Response.Status.UNAUTHORIZED).build();
-		 }
-		
-		 logger.debug("Resource class is invoked {} ",data);
-		 return Response.ok(demoService.ack(), MediaType.APPLICATION_JSON).build();
-    }
-	
+	@ApiOperation(value = "Provision", notes = "provision add-on")
+	public Response provision(ProvisionRequest data,
+			@HeaderParam("authorization") String authString) throws Exception {
+
+		logger.debug("provision Resource class is invoked");
+		if (!authCheck(authString)) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+
+		return Response.ok(hkIntServices.provision(data),
+				MediaType.APPLICATION_JSON).build();
+	}
+
 	@DELETE
-  
 	@Consumes("application/json")
 	@Path("{id}")
-	@ApiOperation(value = "Dummy Test method",
-		    notes = "Dummy method to prove deployment")
-    public Response deProvision(@PathParam("id") String id,String data,@HeaderParam("authorization") String authString) {
-		
-		if(!authCheck(authString)){
-			 return Response.status(Response.Status.UNAUTHORIZED).build();
-		 }
-		
-		logger.debug("Resource class is invoked {} for {}",data,id );
+	@ApiOperation(value = "deProvision", notes = "deProvision")
+	public Response deProvision(@PathParam("id") String id, String data,
+			@HeaderParam("authorization") String authString) {
+
+		if (!authCheck(authString)) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+
+		logger.debug("deProvision is invoked {} for {}", data, id);
 		return Response.status(Response.Status.OK).build();
-    }
-	
+	}
+
 	@PUT
-    @Produces("application/json")
+	@Produces("application/json")
 	@Consumes("application/json")
 	@Path("{id}")
-	@ApiOperation(value = "Dummy Test method",
-		    notes = "Dummy method to prove deployment")
-    public Response planChange(@PathParam("id") String id,String data ,@HeaderParam("authorization") String authString) {
-		
-		if(!authCheck(authString)){
-			 return Response.status(Response.Status.UNAUTHORIZED).build();
-		 }
-		
-		 logger.debug("Resource class is invoked {} for {}",data,id );
-		 return Response.ok(demoService.ack(), MediaType.APPLICATION_JSON).build();
-    }
-	
-private boolean authCheck(String authString) {
-		
-		logger.debug("authString {}" ,authString);
-		if(authString==null){
+	@ApiOperation(value = "planChange", notes = "planChange")
+	public Response planChange(@PathParam("id") String id, String data,
+			@HeaderParam("authorization") String authString) {
+
+		if (!authCheck(authString)) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+
+		logger.debug("planChange class is invoked {} for {}", data, id);
+		return Response.ok(hkIntServices.ack(), MediaType.APPLICATION_JSON)
+				.build();
+	}
+
+	private boolean authCheck(String authString) {
+
+		logger.debug("authString {}", authString);
+		if (authString == null) {
 			return false;
 		}
-		
+
 		String[] authParts = authString.split("\\s+");
-        String authInfo = authParts[1];
-        String auth = null;
-        try {
-			 auth = new String (new BASE64Decoder().decodeBuffer(authInfo));
+		String authInfo = authParts[1];
+		String auth = null;
+		try {
+			auth = new String(new BASE64Decoder().decodeBuffer(authInfo));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String username = auth.split(":")[0];
 		String password = auth.split(":")[1];
-		logger.debug("username {} pwd {}" ,username,password);
-		if(username==null || password == null){
-				return false;
+		logger.debug("username {} pwd {}", username, password);
+		if (username == null || password == null) {
+			return false;
 		}
-		
-		if(username.equals("blockchain") && password.endsWith("eb20d907f3cf16de7428a2650abd4084")){
+
+		if (username.equals("blockchain")
+				&& password.endsWith("eb20d907f3cf16de7428a2650abd4084")) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }

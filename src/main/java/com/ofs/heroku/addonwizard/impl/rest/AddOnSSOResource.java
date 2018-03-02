@@ -26,18 +26,18 @@ import org.apache.logging.log4j.Logger;
 
 import sun.misc.BASE64Decoder;
 
-import com.ofs.heroku.addonwizard.impl.service.ProvisionService;
+import com.ofs.heroku.addonwizard.impl.service.HerokuIntegrationServices;
 
 
 @Api(tags = { "Add on Provisoning  service" })
 // swagger resource annotation
 @Path("/heroku/sso")
-public class SSORsrc {
+public class AddOnSSOResource {
 
-	private static final Logger logger = LogManager.getLogger(SSORsrc.class);
+	private static final Logger logger = LogManager.getLogger(AddOnSSOResource.class);
 
 	@Inject
-	ProvisionService demoService;
+	HerokuIntegrationServices demoService;
 
 	@POST
 	

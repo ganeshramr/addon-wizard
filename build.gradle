@@ -32,14 +32,6 @@ dependencies {
   compile group: 'io.swagger', name: 'swagger-jersey2-jaxrs', version: '1.5.0' 
   //JSON Parsing
   compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.21'
-  //Unit and Integration test
-  compile 'org.testng:testng:6.9.6'
-  //Jersey test framework - For Integration testing
-  compile 'org.glassfish.jersey.test-framework:jersey-test-framework-core:2.21'
-  //Jersey test framework - Container For Integration testing
-  compile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-jetty:2.21'
-  //For Unit tests
-  compile 'org.glassfish.hk2:hk2-testng:2.4.0-b31'
   //For HK2 DI
   compile 'javax.inject:javax.inject:1'
   compile group: 'org.glassfish.hk2', name: 'hk2-utils', version: '2.4.0-b31'
@@ -52,6 +44,13 @@ dependencies {
   compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
   compile 'org.hibernate:hibernate-entitymanager:5.0.1.Final'
   compile 'org.hsqldb:hsqldb:2.3.3'
+  
+  // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+  compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.5'
+  
+  // https://mvnrepository.com/artifact/commons-io/commons-io
+  compile group: 'commons-io', name: 'commons-io', version: '2.5'
+  
 
   
 }
