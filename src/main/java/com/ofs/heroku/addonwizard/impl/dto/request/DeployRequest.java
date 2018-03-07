@@ -17,6 +17,9 @@ public class DeployRequest {
 	private String uuid;
 	@JsonProperty("appName")
 	private String appName;
+	@JsonProperty("code")
+	private String code;
+	
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -28,6 +31,17 @@ public class DeployRequest {
 	@JsonProperty("uuid")
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+	
+	
+	@JsonProperty("code")
+	public String getCode() {
+		return code;
+	}
+
+	@JsonProperty("code")
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	@JsonProperty("appName")

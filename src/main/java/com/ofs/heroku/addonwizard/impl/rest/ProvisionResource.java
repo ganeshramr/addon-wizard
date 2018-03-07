@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.net.URI;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -17,9 +16,8 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,8 +25,11 @@ import org.apache.logging.log4j.Logger;
 
 import sun.misc.BASE64Decoder;
 
+import com.ofs.heroku.addonwizard.impl.dto.request.DeployRequest;
 import com.ofs.heroku.addonwizard.impl.dto.request.ProvisionRequest;
 import com.ofs.heroku.addonwizard.impl.service.HerokuIntegrationServices;
+import com.ofs.heroku.addonwizard.impl.service.ScaryConstants;
+import com.ofs.heroku.addonwizard.impl.service.StaticStorage;
 
 @Api(tags = { "Add on Provisoning  service" })
 // swagger resource annotation
@@ -67,6 +68,16 @@ public class ProvisionResource {
 		if (!authCheck(authString)) {
 			return Response.status(Response.Status.UNAUTHORIZED).build();
 		}
+		
+		if(StaticStorage.addOnProvisioningDataMemoryMap.get(id) != null){
+			
+			StaticStorage.addOnProvisioningDataMemoryMap.remove(id);
+		}
+		
+		if(StaticStorage.addonDeployStatusMap.get(id)!=null){
+			
+			StaticStorage.addonDeployStatusMap.put(id,false);
+		}
 
 		logger.debug("deProvision is invoked {} for {}", data, id);
 		return Response.status(Response.Status.OK).build();
@@ -87,6 +98,46 @@ public class ProvisionResource {
 		logger.debug("planChange class is invoked {} for {}", data, id);
 		return Response.ok(hkIntServices.ack(), MediaType.APPLICATION_JSON)
 				.build();
+	}
+	
+	
+	@GET
+	@ApiOperation(value = "Provision", notes = "provision add-on")
+	public Response OAuthCallBack(@QueryParam("code") String code,@QueryParam("state") String state) throws Exception {
+
+		logger.debug("OAuthCallBack with code {} and state {}",code,state);
+		String deployInputs = null;
+		try {
+			 deployInputs = new String (new BASE64Decoder().decodeBuffer(state));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String uuid = deployInputs.split("::")[0];
+		String appName = deployInputs.split("::")[1];
+		
+		
+		logger.debug("UUID {} and appId {}",uuid,appName);
+		
+		if (StaticStorage.addOnProvisioningDataMemoryMap.get(uuid) == null) {
+			return Response.status(Response.Status.UNAUTHORIZED).build();
+		}
+		
+
+		hkIntServices.fetchToken(code,uuid);
+		
+		
+		DeployRequest data = new DeployRequest();
+		data.setAppName(appName.trim());
+		data.setUuid(uuid);
+		hkIntServices.deployAddOnBundle(data);
+		
+		
+		String url = "https://dashboard.heroku.com/apps/"+data.getAppName();
+		URI targetURIForRedirection = URI.create(url);
+		return Response.seeOther(targetURIForRedirection).build();
+
+		
 	}
 
 	private boolean authCheck(String authString) {
@@ -113,7 +164,7 @@ public class ProvisionResource {
 		}
 
 		if (username.equals("blockchain")
-				&& password.endsWith("eb20d907f3cf16de7428a2650abd4084")) {
+				&& password.equals(ScaryConstants.ADD_ON_MANIFEST_PWD)) {
 			return true;
 		}
 

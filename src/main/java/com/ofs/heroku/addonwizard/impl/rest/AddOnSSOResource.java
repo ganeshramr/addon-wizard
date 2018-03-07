@@ -15,7 +15,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
@@ -26,10 +25,14 @@ import org.apache.logging.log4j.Logger;
 
 import sun.misc.BASE64Decoder;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ofs.heroku.addonwizard.impl.dto.NavData;
 import com.ofs.heroku.addonwizard.impl.service.HerokuIntegrationServices;
+import com.ofs.heroku.addonwizard.impl.service.ScaryConstants;
+import com.ofs.heroku.addonwizard.impl.service.StaticStorage;
 
 
-@Api(tags = { "Add on Provisoning  service" })
+@Api(tags = { "AddOnSSOResource" })
 // swagger resource annotation
 @Path("/heroku/sso")
 public class AddOnSSOResource {
@@ -43,7 +46,7 @@ public class AddOnSSOResource {
 	
 	
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-	@ApiOperation(value = "Dummy Test method", notes = "Dummy method to prove deployment")
+	@ApiOperation(value = "signOn", notes = "signOn")
 	public Response signOn(@FormParam("token") String token,
 			@FormParam("timestamp") String timestamp,
 			@FormParam("id") String id, 
@@ -74,7 +77,7 @@ public class AddOnSSOResource {
 			e.printStackTrace();
 		}
 
-		String formedToken = id + ':' + "f7e2c65bf78a193b5f6f8816e4b2e9ee"
+		String formedToken = id + ':' + ScaryConstants.ADD_ON_MANIFEST_SALT
 				+ ':' + timestamp;
 		String ourSHAToken = sha1(formedToken);
 
@@ -95,12 +98,19 @@ public class AddOnSSOResource {
 			return Response.status(Response.Status.FORBIDDEN).build();
 			
 		}
-			
-		String url = "https://"+request.getServerName()+"/ui/#/";
+		
+		String url =null;
+		if(StaticStorage.addonDeployStatusMap.get(id)==null || !StaticStorage.addonDeployStatusMap.get(id)){
+			url = "https://"+request.getServerName()+"/ui/#/";
+		}else{
+			ObjectMapper objectMapper = new ObjectMapper();
+			NavData navData = objectMapper.readValue(data.contains("=")?data.split("=")[0]:data, NavData.class);
+			url = "http://"+navData.getAppname()+".herokuapp.com/";
+		}
 		
 		URI targetURIForRedirection = URI.create(url);
 		
-	    return Response.seeOther(targetURIForRedirection).cookie(new NewCookie("heroku-nav-data",rawData,"/","", "comment", 100, false),new NewCookie("heroku_sso","true","/","", "comment", 100, false)).build();
+	    return Response.seeOther(targetURIForRedirection).cookie(new NewCookie("heroku-nav-data",rawData,"/","", "comment", 100, false),new NewCookie("heroku_sso","true","/","", "comment", 100, false),new NewCookie("app-id",id,"/","", "comment", 100, false)).build();
 
 	}
 	

@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import java.io.IOException;
+import java.net.URI;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -17,9 +18,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import com.ofs.heroku.addonwizard.impl.dto.request.DeployRequest;
 import com.ofs.heroku.addonwizard.impl.service.HerokuIntegrationServices;
+import com.ofs.heroku.addonwizard.impl.service.ScaryConstants;
 
 @Api(tags={"Deploy  service"}) //swagger resource annotation
 @Path("/heroku/deploy")
@@ -46,9 +49,13 @@ public class DeployResource {
 		if(!authCheck(authString)){
 			 return Response.status(Response.Status.UNAUTHORIZED).build();
 		 }
-		hkIntServices.deployAddOnBundle(data.getAppName());
 		
-		return Response.status(Response.Status.OK).build();
+		String b64state = new BASE64Encoder().encode((data.getUuid()+"::"+data.getAppName()).getBytes());
+		String url = "https://id.heroku.com/oauth/authorize?client_id="+ScaryConstants.OAUTH_CLIENT_ID+"&response_type=code&scope=global&state="+b64state;
+		URI targetURIForRedirection = URI.create(url);
+		return Response.temporaryRedirect(targetURIForRedirection).header("Origin", "https://blockchain-deploy-wizard.herokuapp.com").header("Access-Control-Request-Method", "GET").build();
+		//hkIntServices.deployAddOnBundle(data);
+		
     }
 	
 	
